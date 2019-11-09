@@ -21,9 +21,11 @@
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-react": "^7.7.0",
+    "@babel/preset-typescript": "^7.7.2",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.4",
     "@types/styled-components": "^4.4.0",
+    "@types/unsplash-js": "^5.0.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-styled-components": "^1.10.6",
     "file-loader": "^4.2.0",
@@ -31,6 +33,7 @@
     "react-dom": "^16.11.0",
     "styled-components": "^4.4.1",
     "tslint-microsoft-contrib": "^6.2.0",
+    "unsplash-js": "^6.0.0",
     "url-loader": "^2.2.0",
     "webpack-dev-server": "^3.9.0"
   }

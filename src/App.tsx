@@ -1,7 +1,8 @@
 import * as React from 'react'
 
+import CollectionList from './containers/CollectionList'
+import Store from './containers/Store'
 import { createGlobalStyle } from 'styled-components'
-import styled from 'styled-components'
 
 const StyleReset = createGlobalStyle`
   * {
@@ -11,16 +12,14 @@ const StyleReset = createGlobalStyle`
   box-sizing: border-box;
 }`
 
-const Title = styled.h1`
-  color: red;
-`
-
 class App extends React.Component {
   render() {
     return (
       <>
         <StyleReset/>
-        <Title>Dupa</Title>
+        <Store>
+          <CollectionList/>
+        </Store>
       </>
     )
   }
