@@ -9,6 +9,8 @@ export interface IPrevievPhoto {
   id: string
   alt: string
   src: string
+  likes: number
+  createdAt: string
 }
 
 export interface ICollectionPreview {
@@ -19,4 +21,19 @@ export interface ICollectionPreview {
 
 export interface IContext {
   collections: ICollectionPreview[]
+}
+
+export interface ICollectionProps {
+  id: number
+}
+
+export interface ISortOption {
+  label: string
+  value: string
+}
+
+export interface ISortProps {
+  title: string
+  activeSort: ISortOption | null
+  handleSortChange: (sort: ISortOption | null) => void
 }

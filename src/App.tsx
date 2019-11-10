@@ -1,5 +1,13 @@
 import * as React from 'react'
 
+import {
+  Route,
+  BrowserRouter as Router,
+  Switch
+} from 'react-router-dom'
+
+import { COLLECTION_PARAMS } from './utils/data'
+import Collection from './containers/Collection'
 import CollectionList from './containers/CollectionList'
 import Store from './containers/Store'
 import { createGlobalStyle } from 'styled-components'
@@ -12,17 +20,35 @@ const StyleReset = createGlobalStyle`
   box-sizing: border-box;
 }`
 
-class App extends React.Component {
-  render() {
+const App = () => {
+  const renderRoutes = COLLECTION_PARAMS.map((collection) => {
+    const {id} = collection
     return (
-      <>
-        <StyleReset/>
-        <Store>
-          <CollectionList/>
-        </Store>
-      </>
+      <Route
+        key={id}
+        path={'/' + id.toString()}
+        render={() => <Collection id={id}/>}
+      />
     )
-  }
+  })
+  
+  return (
+    <>
+      <StyleReset/>
+      <Store>
+        <Router>
+          <Switch>
+            <Route
+              exact
+              path='/'
+              component={CollectionList}
+            />
+            {renderRoutes}
+          </Switch>
+        </Router>
+      </Store>
+    </>
+  )
 }
 
 export default App

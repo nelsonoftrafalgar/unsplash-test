@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import CollectionPreview from './CollectionPreview'
+import CollectionPreview from '../components/CollectionPreview'
 import { Context } from '../utils/context'
 import { breakpoint } from '../styles/breakpoints'
 import styled from 'styled-components'

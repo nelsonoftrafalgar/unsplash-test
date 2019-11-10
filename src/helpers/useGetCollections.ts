@@ -10,7 +10,6 @@ export const useGetCollections = (collectionParams: ICollectionParams[], unsplas
       return unsplash.collections.getCollectionPhotos(collection.id, 1, 10, 'latest').then(toJson)
     }))
       .then((data: any) => {
-        
         data.forEach((item: any, i: number) => { 
           const collection: DynamicAssignProp = {
             id: collectionParams[i].id,
@@ -24,6 +23,8 @@ export const useGetCollections = (collectionParams: ICollectionParams[], unsplas
             photo.id = el.id
             photo.src = el.urls.thumb
             photo.alt = el.alt_description
+            photo.likes = el.likes
+            photo.createdAt = el.created_at
 
             collection.photos.push(photo)
           })

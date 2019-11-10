@@ -1,4 +1,5 @@
 import { ICollectionPreview } from '../utils/model'
+import {Link} from 'react-router-dom'
 import React from 'react'
 import { breakpoint } from '../styles/breakpoints'
 import styled from 'styled-components'
@@ -19,6 +20,10 @@ const Wrapper = styled.div`
   ${breakpoint('1100', `
     width: 13%;
   `)}
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 `
 const Photos = styled.div`
   width: 100%;
@@ -31,7 +36,7 @@ const Photo = styled.img`
   margin-bottom: 10px;
   border-radius: 5px;
 `
-const Title = styled.h1`
+const Title = styled.h2`
   text-align: center;
   font-size: 16px;
   font-family: sans-serif;
@@ -39,7 +44,7 @@ const Title = styled.h1`
   font-weight: 400;
 `
 
-const CollectionPreview: React.FC<ICollectionPreview> = ({title, photos}) => {
+const CollectionPreview: React.FC<ICollectionPreview> = ({title, photos, id}) => {
   
   const renderPhotos = photos.map(photo => {
     const {id, src, alt} = photo
@@ -48,10 +53,12 @@ const CollectionPreview: React.FC<ICollectionPreview> = ({title, photos}) => {
   
   return (
     <Wrapper>
-      <Title>{title}</Title>
-      <Photos>
-        {renderPhotos}
-      </Photos>
+      <Link to={id.toString()}>
+        <Title>{title}</Title>
+        <Photos>
+          {renderPhotos}
+        </Photos>
+      </Link>
     </Wrapper>
   )
 }
