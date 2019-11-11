@@ -1,4 +1,4 @@
-import { IPrevievPhoto } from '../utils/model'
+import { ICollectionPhotoProps } from '../utils/model'
 import React from 'react'
 import { breakpoint } from '../styles/breakpoints'
 import styled from 'styled-components'
@@ -61,16 +61,12 @@ const Stat = styled.p`
 
 const Icon = styled.span`
   margin-right: 10px;
-`
+` 
 
-interface ICollectionPhotoProps extends IPrevievPhoto {
-  handleModalView: (toggle: boolean) => () => void
-} 
-
-const CollectionPhoto: React.FC<ICollectionPhotoProps> = ({handleModalView, src, alt, likes}) => {
+const CollectionPhoto: React.FC<ICollectionPhotoProps> = ({handleModalView, src, alt, likes, lastPhotoRef, id}) => {
   return (
-    <Wrapper>
-      <Overlay onClick={handleModalView(true)}>
+    <Wrapper ref={lastPhotoRef}>
+      <Overlay onClick={handleModalView(true, id)}>
         <Stat>
           <Icon>&#9733;</Icon>
           {likes}

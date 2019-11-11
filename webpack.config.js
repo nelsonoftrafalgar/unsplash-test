@@ -8,7 +8,8 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, '/dist'),
-    filename: 'bundle.min.js'
+    filename: 'bundle.min.js',
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -29,6 +30,9 @@ module.exports = {
       ]
     }
     ]
+  },
+  devServer: {
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({

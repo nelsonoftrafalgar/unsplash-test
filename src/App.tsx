@@ -27,7 +27,7 @@ const App = () => {
       <Route
         key={id}
         path={'/' + id.toString()}
-        render={() => <Collection id={id}/>}
+        render={() => <Collection {...collection}/>}
       />
     )
   })
