@@ -83,7 +83,7 @@ const Collection: React.FC<ICollectionProps> = ({id, name}) => {
       }
 
       initialRender.current = false
-    })
+    }, {threshold: 0.5})
     if (node) { observer.current.observe(node) }
   }, [])
 

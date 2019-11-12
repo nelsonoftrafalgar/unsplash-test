@@ -35,8 +35,11 @@ const PhotoContainer = styled.div`
 const Image = styled.img`
   width: 60%;
   ${breakpoint(variables.breakpointSmall, `
-    height: 40vw;
+    height: 30vw;
     width: unset;
+  `)}
+  ${breakpoint(variables.breakpointMedium, `
+    height: 40vw;
   `)}
 `
 
