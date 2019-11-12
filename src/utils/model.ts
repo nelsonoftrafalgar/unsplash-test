@@ -1,4 +1,4 @@
-export type DynamicAssignProp = { [key: string]: any }
+export interface IDynamicAssignProp { [key: string]: any }
 
 export interface ICollectionParams {
   id: number
@@ -21,7 +21,7 @@ export interface ICollectionPreview {
 
 export interface IContext {
   collections: ICollectionPreview[]
-  dispatch: React.Dispatch<IAction>
+  dispatch: React.Dispatch<IAction<any>>
   currentCollection: ICollectionPreview
   singlePhoto: ISinglePhoto | null
 }
@@ -48,19 +48,17 @@ export interface IAppState {
   singlePhoto: ISinglePhoto | null
 }
 
-export type ActionType = 
+export type ActionType =
 | 'GET_COLLECTIONS'
 | 'GET_CURRENT_COLLECTION'
-| 'LOAD_MORE_PHOTOS' 
+| 'LOAD_MORE_PHOTOS'
 | 'CLEAR_CURRENT_COLLECTION'
 | 'GET_SINGLE_PHOTO'
 | 'CLEAR_SINGLE_PHOTO'
 
-export type ActionPayload = ICollectionPreview[] 
-
-export interface IAction {
+export interface IAction<T> {
   type: ActionType
-  payload: any
+  payload: T
 }
 
 export type PhotoRef = (node: HTMLDivElement) => void
@@ -71,12 +69,12 @@ export interface ICollectionPhotoProps extends IPrevievPhoto {
 }
 
 export interface ISinglePhoto {
-  id: string 
+  id: string
   downloads: number
   createdAt: string
-  likes: number 
+  likes: number
   author: string
-  views: number 
-  url: string 
+  views: number
+  url: string
   alt: string
 }

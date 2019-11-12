@@ -8,8 +8,8 @@ import {
 } from './actions'
 import { IAction, IAppState, ICollectionPreview } from './model'
 
-export const reducer = (state: IAppState, action: IAction): IAppState => {
-  switch(action.type) {
+export const reducer = (state: IAppState, action: IAction<any>): IAppState => {
+  switch (action.type) {
     case GET_COLLECTIONS:
       return {
         ...state,
@@ -18,20 +18,20 @@ export const reducer = (state: IAppState, action: IAction): IAppState => {
     case GET_CURRENT_COLLECTION:
       return {
         ...state,
-        currentCollection: action.payload[0] 
+        currentCollection: action.payload[0]
       }
     case LOAD_MORE_PHOTOS:
       return {
         ...state,
         currentCollection: {
           ...state.currentCollection as ICollectionPreview,
-          photos: [...state.currentCollection.photos, ...action.payload[0].photos] 
-        } 
+          photos: [...state.currentCollection.photos, ...action.payload[0].photos]
+        }
       }
     case CLEAR_CURRENT_COLLECTION:
       return {
         ...state,
-        currentCollection: action.payload[0] 
+        currentCollection: action.payload[0]
       }
     case GET_SINGLE_PHOTO:
       return {
@@ -43,7 +43,7 @@ export const reducer = (state: IAppState, action: IAction): IAppState => {
         ...state,
         singlePhoto: action.payload
       }
-    default: 
+    default:
       return state
   }
 }

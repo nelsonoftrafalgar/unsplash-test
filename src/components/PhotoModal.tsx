@@ -4,6 +4,7 @@ import { Context } from '../utils/context'
 import { breakpoint } from '../styles/breakpoints'
 import styled from 'styled-components'
 import { useGetSinglePhoto } from '../helpers/useGetSinglePhoto'
+import { variables } from '../styles/variables'
 
 const Wrapper = styled.div`
   position: fixed;
@@ -12,7 +13,6 @@ const Wrapper = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: #000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,67 +23,88 @@ const PhotoContainer = styled.div`
   position: relative;
   width: 80%;
   height: 90vh;
-  background: #fff;
-  border-radius: 5px;
+  background: ${variables.itemsBgColor};
+  border-radius: ${variables.borderRadius};
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
+  padding: 20px 0;
 `
 
 const Image = styled.img`
-  height: 70%;
+  width: 60%;
+  ${breakpoint(variables.breakpointSmall, `
+    height: 40vw;
+    width: unset;
+  `)}
 `
 
 const CloseButton = styled.button`
-  background:
-  transparent;
-  color: #000;
+  background: transparent;
+  color: ${variables.fontColor};
   position: absolute;
   top: 10px;
   right: 15px;
-  font-size: 20px;
+  font-size: ${variables.fontSize3};
   cursor: pointer;
 `
 
 const Loading = styled.span`
-  color: #fff;
-  font-size: 20px;
-  font-family: sans-serif;
+  color: ${variables.lightFontColor};
+  font-size: ${variables.fontSize3};
+  font-family: ${variables.fontFamily};
 `
 
 const Stat = styled.p`
-  margin: 10px 0;
-  font-size: 16px;
-  font-family: sans-serif;
-  /* ${breakpoint('1100', `
-    margin: 5px 0;
-    font-size: 19px;
-  `)} */
+  margin: 10px;
+  font-size: ${variables.fontSize2};
+  font-family: ${variables.fontFamily};
 `
 
-const Icon = styled.span`
+const Text = styled.span`
   margin-right: 10px;
-  font-size: 13px;
+  font-size: ${variables.fontSize1};
 `
 
 const Stats = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 10px;
+  flex-direction: column;
+  ${breakpoint(variables.breakpointSmall, `
+    justify-content: space-evenly;
+    flex-direction: row;
+  `)}
 `
 
+const FacebookButton = styled.a`
+  background: ${variables.fontColor};
+  color: ${variables.lightFontColor};
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  font-size: ${variables.fontSize4};
+  cursor: pointer;
+  font-weight: ${variables.fontWeightBold};
+  padding: 1px 10px;
+  border-radius: ${variables.borderRadius};
+  font-family: ${variables.fontFamily};
+  text-decoration: none;
+`
 
 interface IPhotoModalProps {
   handleModalView: (toggle: boolean, id: string) => () => void
   selecetdPhotoId: string
-} 
+}
 
 const PhotoModal: React.FC<IPhotoModalProps> = ({handleModalView, selecetdPhotoId}) => {
   const {dispatch, singlePhoto} = useContext(Context)
 
   useGetSinglePhoto(dispatch, selecetdPhotoId)
-  
+
   if (!singlePhoto) {
     return (
       <Wrapper>
@@ -91,7 +112,7 @@ const PhotoModal: React.FC<IPhotoModalProps> = ({handleModalView, selecetdPhotoI
       </Wrapper>
     )
   }
-  
+
   const {url, alt, views, downloads, likes, author, createdAt} = singlePhoto
 
   return (
@@ -99,26 +120,33 @@ const PhotoModal: React.FC<IPhotoModalProps> = ({handleModalView, selecetdPhotoI
       <PhotoContainer>
         <Image src={url} alt={alt}/>
         <CloseButton onClick={handleModalView(false, '')}>&#10005;</CloseButton>
+        <FacebookButton
+          href='https://www.facebook.com/sharer/sharer.php?u=example.org'
+          target='_blank'
+          rel='noopener'
+        >
+          f
+        </FacebookButton>
         <Stats>
           <Stat>
-            <Icon>Likes:</Icon>
+            <Text>Likes:</Text>
             {likes}
           </Stat>
           <Stat>
-            <Icon>Author:</Icon>
+            <Text>Author:</Text>
             {author}
           </Stat>
           <Stat>
-            <Icon>Views:</Icon>
+            <Text>Views:</Text>
             {views}
           </Stat>
           <Stat>
-            <Icon>Downloads</Icon>
+            <Text>Downloads</Text>
             {downloads}
           </Stat>
           <Stat>
-            <Icon>Added:</Icon>
-            {createdAt.substr(0 ,10)}
+            <Text>Added:</Text>
+            {createdAt.substr(0 , 10)}
           </Stat>
         </Stats>
       </PhotoContainer>

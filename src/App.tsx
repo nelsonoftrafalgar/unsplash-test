@@ -23,6 +23,7 @@ const StyleReset = createGlobalStyle`
 const App = () => {
   const renderRoutes = COLLECTION_PARAMS.map((collection) => {
     const {id} = collection
+
     return (
       <Route
         key={id}
@@ -31,7 +32,7 @@ const App = () => {
       />
     )
   })
-  
+
   return (
     <>
       <StyleReset/>
@@ -39,7 +40,7 @@ const App = () => {
         <Router>
           <Switch>
             <Route
-              exact
+              exact={true}
               path='/'
               component={CollectionList}
             />

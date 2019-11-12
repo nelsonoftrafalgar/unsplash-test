@@ -18,20 +18,24 @@ const Store: React.FC = ({children}) => {
     },
     singlePhoto: null
   }
-  
+
   const [appState, dispatch] = useReducer(reducer, initialState)
 
   useEffect(() => {
     getCollections(COLLECTION_PARAMS, dispatch, GET_COLLECTIONS, 1)
-  }, [])
+  },        [])
+
+  const {collections, currentCollection, singlePhoto} = appState
 
   return (
-    <Context.Provider value={{
-      collections: appState.collections,
-      dispatch,
-      currentCollection: appState.currentCollection,
-      singlePhoto: appState.singlePhoto
-    }}>
+    <Context.Provider
+      value={{
+        collections,
+        dispatch,
+        currentCollection,
+        singlePhoto
+      }}
+    >
       {children}
     </Context.Provider>
   )

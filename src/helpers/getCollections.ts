@@ -1,26 +1,34 @@
-import { ActionType, DynamicAssignProp, IAction, ICollectionParams, ICollectionPreview } from '../utils/model'
+import { ActionType, IAction, ICollectionParams, ICollectionPreview, IDynamicAssignProp } from '../utils/model'
 
+import { GET_COLLECTIONS } from '../utils/actions'
 import { toJson } from 'unsplash-js'
 import { unsplash } from './unsplash'
 
-export const getCollections = (collectionParams: ICollectionParams[], dispatch: React.Dispatch<IAction>, actionType: ActionType, page: number) => {
-  const collectionsArray: DynamicAssignProp[] = [] 
+export const getCollections = (
+  collectionParams: ICollectionParams[],
+  dispatch: React.Dispatch<IAction<ICollectionPreview[]>>,
+  actionType: ActionType,
+  page: number
+) => {
+  const collectionsArray: IDynamicAssignProp[] = []
+  const photoCount = actionType === GET_COLLECTIONS ? 10 : 18
 
   Promise.all(collectionParams.map((collection: ICollectionParams) => {
-    return unsplash.collections.getCollectionPhotos(collection.id, page, 18, 'latest').then(toJson)
+    return unsplash.collections.getCollectionPhotos(collection.id, page, photoCount, 'latest')
+    .then(toJson)
   }))
     .then((data: any) => {
-      
-      data.forEach((item: any, i: number) => { 
-        const collection: DynamicAssignProp = {
+
+      for (const [i, item] of data.entries()) {
+        const collection: IDynamicAssignProp = {
           id: collectionParams[i].id,
           title: collectionParams[i].name,
           photos: []
         }
-        
-        item.forEach((el: any) => {
-          const photo: DynamicAssignProp = {}
-          
+
+        for (const el of item) {
+          const photo: IDynamicAssignProp = {}
+
           photo.id = el.id
           photo.src = el.urls.thumb
           photo.alt = el.alt_description
@@ -28,12 +36,13 @@ export const getCollections = (collectionParams: ICollectionParams[], dispatch: 
           photo.createdAt = el.created_at
 
           collection.photos.push(photo)
-        })
+        }
         collectionsArray.push(collection)
-      })
+      }
+
       dispatch({type: actionType, payload: collectionsArray as ICollectionPreview[]})
     })
     .catch((error) => {
-      console.error(error)
+      throw new Error(error)
     })
 }

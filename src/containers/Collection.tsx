@@ -10,22 +10,29 @@ import { breakpoint } from '../styles/breakpoints'
 import { getCollections } from '../helpers/getCollections'
 import { sortType } from '../helpers/sortType'
 import styled from 'styled-components'
+import { variables } from '../styles/variables'
 
 const Wrapper = styled.section`
   width: 100%;
   min-height: 100vh;
-  background: #f5f6f8;
+  background: ${variables.bgColor};
   display: flex;
   justify-content: space-evenly;
   padding: 20px 0;
   flex-direction: column;
   align-items: center;
-  ${breakpoint('500', `
+  ${breakpoint(variables.breakpointSmall, `
     flex-direction: row;
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: center;
   `)}
+`
+
+const Loading = styled.span`
+  color: ${variables.fontColor};
+  font-size: ${variables.fontSize3};
+  font-family: ${variables.fontFamily};
 `
 
 const Collection: React.FC<ICollectionProps> = ({id, name}) => {
@@ -34,13 +41,14 @@ const Collection: React.FC<ICollectionProps> = ({id, name}) => {
   const [activeSort, setActiveSort] = useState<ISortOption | null>(null)
   const [pageNumber, setPageNumber] = useState<number>(1)
   const [selecetdPhotoId, setSelecetdPhotoId] = useState<string>('')
-  const observer = useRef<any>()
+  const observer = useRef<IntersectionObserver>()
   const initialRender = useRef(true)
 
   const collectionParams = [{id, name}]
-  
+
   useEffect(() => {
     getCollections(collectionParams, dispatch, GET_CURRENT_COLLECTION, pageNumber)
+
     return () => {
       dispatch({type: CLEAR_CURRENT_COLLECTION, payload: []})
     }
@@ -55,66 +63,66 @@ const Collection: React.FC<ICollectionProps> = ({id, name}) => {
   const handleSortChange = (sort: ISortOption | null) => {
     setActiveSort(sort)
   }
-  
-  const handleModalView = (toggle: boolean, id?: string) => () => {
+
+  const handleModalView = (toggle: boolean, photoId?: string) => () => {
     document.body.style.overflow = toggle ? 'hidden' : 'visible'
     setIsModalOn(toggle)
     dispatch({type: CLEAR_SINGLE_PHOTO, payload: null})
-    if (id) {
-      setSelecetdPhotoId(id)
+    if (photoId) {
+      setSelecetdPhotoId(photoId)
     }
   }
-  
-  const lastPhotoRef = useCallback(node => {
-    if (observer.current) observer.current.disconnect()
-    observer.current = new IntersectionObserver(entries => {
+
+  const lastPhotoRef = useCallback((node) => {
+    if (observer.current) { observer.current.disconnect() }
+    observer.current = new IntersectionObserver((entries) => {
       if (!initialRender.current) {
         if (entries[0].isIntersecting) {
-          setPageNumber((pageNumber => pageNumber + 1))
+          setPageNumber((pageNumber) => pageNumber + 1)
         }
       }
 
       initialRender.current = false
     })
-    if (node) observer.current.observe(node)
+    if (node) { observer.current.observe(node) }
   }, [])
 
   const renderPhotos = currentCollection ? [...currentCollection.photos]
-      .sort(sortType(activeSort))
-      .map((photo, i, arr) => {
-        if (arr.length === i + 1) {
-          return (
-            <CollectionPhoto 
-              lastPhotoRef={lastPhotoRef} 
-              key={photo.id} 
-              handleModalView={handleModalView} 
-              {...photo}
-            />
-          )  
-        } else {
-          return (
-            <CollectionPhoto 
-              key={photo.id} 
-              handleModalView={handleModalView} 
-              {...photo}
-            />
-          )  
-        }
-  }) : []
-  
+    .sort(sortType(activeSort))
+    .map((photo, i, arr) => {
+      if (arr.length === i + 1) {
+        return (
+          <CollectionPhoto
+            lastPhotoRef={lastPhotoRef}
+            key={photo.id}
+            handleModalView={handleModalView}
+            {...photo}
+          />
+        )
+      } else {
+        return (
+          <CollectionPhoto
+            key={photo.id}
+            handleModalView={handleModalView}
+            {...photo}
+          />
+        )
+      }
+  }) : <Loading>Loading...</Loading>
+
   return (
     <>
-      <Sort 
-        title={currentCollection ? currentCollection.title : ''} 
-        activeSort={activeSort} 
+      <Sort
+        title={currentCollection ? currentCollection.title : 'Loading...'}
+        activeSort={activeSort}
         handleSortChange={handleSortChange}
       />
       <Wrapper>
         {renderPhotos}
       </Wrapper>
-      {isModalOn && 
-        <PhotoModal 
-          selecetdPhotoId={selecetdPhotoId} 
+      {isModalOn &&
+        <PhotoModal
+          selecetdPhotoId={selecetdPhotoId}
           handleModalView={handleModalView}
         />
       }

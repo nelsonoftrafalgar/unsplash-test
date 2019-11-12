@@ -1,19 +1,13 @@
-import { StylesConfig } from "react-select/src/styles"
-
-const variables = {
-  fontColor: '#000',
-  borderColor: 'transparent',
-  itemsBgColor: '#fff',
-  boxShadow: '0px 4px 12px 0px rgba(198, 198, 198, 0.82)',
-  borderRadius: '5px'
-}
+import { StylesConfig } from 'react-select/src/styles'
+import { variables } from './variables'
 
 const {
   borderRadius,
-  borderColor, 
-  fontColor, 
-  itemsBgColor, 
-  boxShadow
+  fontColor,
+  itemsBgColor,
+  boxShadow,
+  fontFamily,
+  fontSize2
 } = variables
 
 export const SELECT_STYLES: StylesConfig = {
@@ -21,7 +15,7 @@ export const SELECT_STYLES: StylesConfig = {
     return {
       ...base,
       width: '200px',
-      border: `1px solid ${borderColor}`,
+      border: `1px solid transparent`,
       borderRadius: `${borderRadius}`,
       background: `${itemsBgColor}`,
       boxShadow: `${boxShadow}`,
@@ -35,19 +29,16 @@ export const SELECT_STYLES: StylesConfig = {
     return {
       ...base,
       paddingLeft: 5,
-      color: `${fontColor}`,
+      color: `${fontColor}`
     }
   },
   control: () => {
     return {
       'display': 'flex',
-      'fontSize': '14px',
-      'fontFamily': 'sans-serif',
-      'color': 'black',
+      'fontSize': `${fontSize2}`,
+      'fontFamily': `${fontFamily}`,
+      'color': `${fontColor}`,
       'justifyContent': 'center',
-      '@media (min-width: 1024px)': {
-        fontSize: '14px'
-      },
       '&:hover': {
         cursor: 'pointer',
         opacity: '.6'
@@ -56,19 +47,19 @@ export const SELECT_STYLES: StylesConfig = {
   },
   menuList: () => {
     return {
-      background: '#fff', 
+      background: `${itemsBgColor}`
     }
   },
   option: (styles) => {
     return {
       ...styles,
-      'fontFamily': 'sans-serif',
+      fontFamily: `${fontFamily}`
     }
   },
   placeholder: (base) => {
     return {
       ...base,
-      color: `${fontColor}`,
+      color: `${fontColor}`
     }
   },
   indicatorSeparator: () => {
@@ -80,13 +71,13 @@ export const SELECT_STYLES: StylesConfig = {
     return {
       ...base,
       ':hover': {color: `${fontColor}`},
-      cursor: 'pointer',
-      color: `${fontColor}`,
-      padding: '0 8px',
-      marginBottom: '4px',
-      width: '32px',
-      height: '32px',
-      svg: {
+      'cursor': 'pointer',
+      'color': `${fontColor}`,
+      'padding': '0 8px',
+      'marginBottom': '4px',
+      'width': '32px',
+      'height': '32px',
+      'svg': {
         width: '32px',
         height: '32px'
       }
@@ -95,7 +86,7 @@ export const SELECT_STYLES: StylesConfig = {
   singleValue: (styles) => {
     return {
       ...styles,
-      color: `${fontColor}`,
+      color: `${fontColor}`
     }
   },
   clearIndicator: () => {
