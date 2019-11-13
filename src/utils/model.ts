@@ -23,7 +23,7 @@ export interface IContext {
   collections: ICollectionPreview[]
   dispatch: React.Dispatch<IAction<any>>
   currentCollection: ICollectionPreview
-  singlePhoto: ISinglePhoto | null
+  singlePhoto: ISinglePhoto | undefined
 }
 
 export interface ICollectionProps {
@@ -38,14 +38,14 @@ export interface ISortOption {
 
 export interface ISortProps {
   title: string
-  activeSort: ISortOption | null
-  handleSortChange: (sort: ISortOption | null) => void
+  activeSort: ISortOption | undefined
+  handleSortChange: (sort: ISortOption | undefined) => void
 }
 
 export interface IAppState {
   collections: ICollectionPreview[]
   currentCollection: ICollectionPreview
-  singlePhoto: ISinglePhoto | null
+  singlePhoto: ISinglePhoto | undefined
 }
 
 export type ActionType =

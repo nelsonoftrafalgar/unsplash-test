@@ -23,12 +23,13 @@ const StyleReset = createGlobalStyle`
 const App = () => {
   const renderRoutes = COLLECTION_PARAMS.map((collection) => {
     const {id} = collection
+    const render = () => <Collection {...collection}/>
 
     return (
       <Route
         key={id}
-        path={'/' + id.toString()}
-        render={() => <Collection {...collection}/>}
+        path={`/${id.toString()}`}
+        render={render}
       />
     )
   })

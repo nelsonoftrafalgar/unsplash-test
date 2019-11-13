@@ -12,16 +12,24 @@ import { sortType } from '../helpers/sortType'
 import styled from 'styled-components'
 import { variables } from '../styles/variables'
 
+const {
+  fontColor,
+  bgColor,
+  breakpointSmall,
+  fontSize3,
+  fontFamily
+} = variables
+
 const Wrapper = styled.section`
   width: 100%;
   min-height: 100vh;
-  background: ${variables.bgColor};
+  background: ${bgColor};
   display: flex;
   justify-content: space-evenly;
   padding: 20px 0;
   flex-direction: column;
   align-items: center;
-  ${breakpoint(variables.breakpointSmall, `
+  ${breakpoint(breakpointSmall, `
     flex-direction: row;
     flex-wrap: wrap;
     align-items: flex-start;
@@ -30,15 +38,15 @@ const Wrapper = styled.section`
 `
 
 const Loading = styled.span`
-  color: ${variables.fontColor};
-  font-size: ${variables.fontSize3};
-  font-family: ${variables.fontFamily};
+  color: ${fontColor};
+  font-size: ${fontSize3};
+  font-family: ${fontFamily};
 `
 
 const Collection: React.FC<ICollectionProps> = ({id, name}) => {
   const {currentCollection, dispatch} = useContext(Context)
   const [isModalOn, setIsModalOn] = useState<boolean>(false)
-  const [activeSort, setActiveSort] = useState<ISortOption | null>(null)
+  const [activeSort, setActiveSort] = useState<ISortOption | undefined>(undefined)
   const [pageNumber, setPageNumber] = useState<number>(1)
   const [selecetdPhotoId, setSelecetdPhotoId] = useState<string>('')
   const observer = useRef<IntersectionObserver>()
@@ -60,14 +68,14 @@ const Collection: React.FC<ICollectionProps> = ({id, name}) => {
     }
   }, [pageNumber])
 
-  const handleSortChange = (sort: ISortOption | null) => {
+  const handleSortChange = (sort: ISortOption | undefined) => {
     setActiveSort(sort)
   }
 
   const handleModalView = (toggle: boolean, photoId?: string) => () => {
     document.body.style.overflow = toggle ? 'hidden' : 'visible'
     setIsModalOn(toggle)
-    dispatch({type: CLEAR_SINGLE_PHOTO, payload: null})
+    dispatch({type: CLEAR_SINGLE_PHOTO, payload: undefined})
     if (photoId) {
       setSelecetdPhotoId(photoId)
     }
@@ -76,14 +84,12 @@ const Collection: React.FC<ICollectionProps> = ({id, name}) => {
   const lastPhotoRef = useCallback((node) => {
     if (observer.current) { observer.current.disconnect() }
     observer.current = new IntersectionObserver((entries) => {
-      if (!initialRender.current) {
-        if (entries[0].isIntersecting) {
-          setPageNumber((pageNumber) => pageNumber + 1)
-        }
+      if (!initialRender.current && entries[0].isIntersecting) {
+        setPageNumber((pageNum) => pageNum + 1)
       }
 
       initialRender.current = false
-    }, {threshold: 0.5})
+    }, {threshold: 0.25})
     if (node) { observer.current.observe(node) }
   }, [])
 
@@ -110,22 +116,24 @@ const Collection: React.FC<ICollectionProps> = ({id, name}) => {
       }
   }) : <Loading>Loading...</Loading>
 
+  const collectionTitle = currentCollection ? currentCollection.title : 'Loading...'
+
   return (
     <>
       <Sort
-        title={currentCollection ? currentCollection.title : 'Loading...'}
+        title={collectionTitle}
         activeSort={activeSort}
         handleSortChange={handleSortChange}
       />
       <Wrapper>
         {renderPhotos}
       </Wrapper>
-      {isModalOn &&
+      {isModalOn && (
         <PhotoModal
           selecetdPhotoId={selecetdPhotoId}
           handleModalView={handleModalView}
         />
-      }
+      )}
     </>
   )
 }

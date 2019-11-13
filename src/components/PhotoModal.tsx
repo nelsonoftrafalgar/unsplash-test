@@ -6,6 +6,21 @@ import styled from 'styled-components'
 import { useGetSinglePhoto } from '../helpers/useGetSinglePhoto'
 import { variables } from '../styles/variables'
 
+const {
+  itemsBgColor,
+  borderRadius,
+  lightFontColor,
+  fontColor,
+  breakpointMedium,
+  breakpointSmall,
+  fontSize1,
+  fontSize2,
+  fontSize3,
+  fontSize4,
+  fontFamily,
+  fontWeightBold
+} = variables
+
 const Wrapper = styled.div`
   position: fixed;
   height: 100%;
@@ -23,8 +38,8 @@ const PhotoContainer = styled.div`
   position: relative;
   width: 80%;
   height: 90vh;
-  background: ${variables.itemsBgColor};
-  border-radius: ${variables.borderRadius};
+  background: ${itemsBgColor};
+  border-radius: ${borderRadius};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -34,40 +49,40 @@ const PhotoContainer = styled.div`
 
 const Image = styled.img`
   width: 60%;
-  ${breakpoint(variables.breakpointSmall, `
+  ${breakpoint(breakpointSmall, `
     height: 30vw;
     width: unset;
   `)}
-  ${breakpoint(variables.breakpointMedium, `
+  ${breakpoint(breakpointMedium, `
     height: 40vw;
   `)}
 `
 
 const CloseButton = styled.button`
   background: transparent;
-  color: ${variables.fontColor};
+  color: ${fontColor};
   position: absolute;
   top: 10px;
   right: 15px;
-  font-size: ${variables.fontSize3};
+  font-size: ${fontSize3};
   cursor: pointer;
 `
 
 const Loading = styled.span`
-  color: ${variables.lightFontColor};
-  font-size: ${variables.fontSize3};
-  font-family: ${variables.fontFamily};
+  color: ${lightFontColor};
+  font-size: ${fontSize3};
+  font-family: ${fontFamily};
 `
 
 const Stat = styled.p`
   margin: 10px;
-  font-size: ${variables.fontSize2};
-  font-family: ${variables.fontFamily};
+  font-size: ${fontSize2};
+  font-family: ${fontFamily};
 `
 
 const Text = styled.span`
   margin-right: 10px;
-  font-size: ${variables.fontSize1};
+  font-size: ${fontSize1};
 `
 
 const Stats = styled.div`
@@ -77,24 +92,24 @@ const Stats = styled.div`
   flex-wrap: wrap;
   padding: 0 10px;
   flex-direction: column;
-  ${breakpoint(variables.breakpointSmall, `
+  ${breakpoint(breakpointSmall, `
     justify-content: space-evenly;
     flex-direction: row;
   `)}
 `
 
 const FacebookButton = styled.a`
-  background: ${variables.fontColor};
-  color: ${variables.lightFontColor};
+  background: ${fontColor};
+  color: ${lightFontColor};
   position: absolute;
   top: 10px;
   left: 15px;
-  font-size: ${variables.fontSize4};
+  font-size: ${fontSize4};
   cursor: pointer;
-  font-weight: ${variables.fontWeightBold};
+  font-weight: ${fontWeightBold};
   padding: 1px 10px;
-  border-radius: ${variables.borderRadius};
-  font-family: ${variables.fontFamily};
+  border-radius: ${borderRadius};
+  font-family: ${fontFamily};
   text-decoration: none;
 `
 
@@ -120,9 +135,14 @@ const PhotoModal: React.FC<IPhotoModalProps> = ({handleModalView, selecetdPhotoI
 
   return (
     <Wrapper>
-      <PhotoContainer>
-        <Image src={url} alt={alt}/>
-        <CloseButton onClick={handleModalView(false, '')}>&#10005;</CloseButton>
+      <PhotoContainer data-cy='single-photo-modal'>
+        <Image data-cy='modal-photo' src={url} alt={alt}/>
+        <CloseButton
+          data-cy='single-photo-modal-close'
+          onClick={handleModalView(false, '')}
+        >
+          &#10005;
+        </CloseButton>
         <FacebookButton
           href='https://www.facebook.com/sharer/sharer.php?u=example.org'
           target='_blank'
@@ -130,7 +150,7 @@ const PhotoModal: React.FC<IPhotoModalProps> = ({handleModalView, selecetdPhotoI
         >
           f
         </FacebookButton>
-        <Stats>
+        <Stats data-cy='photo-description'>
           <Stat>
             <Text>Likes:</Text>
             {likes}

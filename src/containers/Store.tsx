@@ -16,7 +16,7 @@ const Store: React.FC = ({children}) => {
       title: '',
       photos: []
     },
-    singlePhoto: null
+    singlePhoto: undefined
   }
 
   const [appState, dispatch] = useReducer(reducer, initialState)

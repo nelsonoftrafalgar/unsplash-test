@@ -6,7 +6,7 @@ import {
   GET_SINGLE_PHOTO,
   LOAD_MORE_PHOTOS
 } from './actions'
-import { IAction, IAppState, ICollectionPreview } from './model'
+import { IAction, IAppState } from './model'
 
 export const reducer = (state: IAppState, action: IAction<any>): IAppState => {
   switch (action.type) {
@@ -24,7 +24,7 @@ export const reducer = (state: IAppState, action: IAction<any>): IAppState => {
       return {
         ...state,
         currentCollection: {
-          ...state.currentCollection as ICollectionPreview,
+          ...state.currentCollection,
           photos: [...state.currentCollection.photos, ...action.payload[0].photos]
         }
       }

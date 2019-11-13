@@ -23,5 +23,8 @@ export const useGetSinglePhoto = (dispatch: React.Dispatch<IAction<ISinglePhoto>
 
         dispatch({type: GET_SINGLE_PHOTO, payload: singlePhoto as ISinglePhoto})
       })
+      .catch((error: string) => {
+        throw new Error(error)
+      })
   }, [])
 }

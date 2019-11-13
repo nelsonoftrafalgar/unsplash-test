@@ -4,21 +4,33 @@ import { breakpoint } from '../styles/breakpoints'
 import styled from 'styled-components'
 import { variables } from '../styles/variables'
 
+const {
+  itemsBgColor,
+  borderRadius,
+  boxShadow,
+  breakpointLarge,
+  breakpointMedium,
+  breakpointSmall,
+  fontSize3,
+  fontSize4,
+  fontFamily
+} = variables
+
 const Wrapper = styled.div`
   position: relative;
   Width: 95%;
-  background: ${variables.itemsBgColor};
+  background: ${itemsBgColor};
   padding: 10px 10px 0 10px;
-  border-radius: ${variables.borderRadius};
-  box-shadow: ${variables.boxShadow};
+  border-radius: ${borderRadius};
+  box-shadow: ${boxShadow};
   margin: 15px;
-  ${breakpoint(variables.breakpointSmall, `
+  ${breakpoint(breakpointSmall, `
     width: 45%;
   `)}
-  ${breakpoint(variables.breakpointMedium, `
+  ${breakpoint(breakpointMedium, `
     width: 30%;
   `)}
-  ${breakpoint(variables.breakpointLarge, `
+  ${breakpoint(breakpointLarge, `
     width: 13%;
   `)}
 `
@@ -26,17 +38,17 @@ const Wrapper = styled.div`
 const Photo = styled.img`
   width: 100%;
   margin-bottom: 10px;
-  border-radius: ${variables.borderRadius};
+  border-radius: ${borderRadius};
 `
 
 const Overlay = styled.button`
-  background: ${variables.itemsBgColor};
+  background: ${itemsBgColor};
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  border-radius: ${variables.borderRadius};
+  border-radius: ${borderRadius};
   opacity: 0;
   transition: opacity .3s ease;
   display: flex;
@@ -52,11 +64,11 @@ const Overlay = styled.button`
 
 const Stat = styled.p`
   margin: 10px 0;
-  font-size: ${variables.fontSize4};
-  font-family: ${variables.fontFamily};
-  ${breakpoint(variables.breakpointLarge, `
+  font-size: ${fontSize4};
+  font-family: ${fontFamily};
+  ${breakpoint(breakpointLarge, `
     margin: 5px 0;
-    font-size: ${variables.fontSize3};
+    font-size: ${fontSize3};
   `)}
 `
 
@@ -75,8 +87,8 @@ const CollectionPhoto: React.FC<ICollectionPhotoProps> = ({
 }) => {
 
   return (
-    <Wrapper ref={lastPhotoRef}>
-      <Overlay onClick={handleModalView(true, id)}>
+    <Wrapper data-cy='single-collection-photo-wrapper' ref={lastPhotoRef}>
+      <Overlay data-cy='single-collection-photo-overlay' onClick={handleModalView(true, id)}>
         <Stat>
           <Icon>&#9733;</Icon>
           {likes}
@@ -85,7 +97,7 @@ const CollectionPhoto: React.FC<ICollectionPhotoProps> = ({
           {createdAt.substring(0, 10)}
         </Stat>
       </Overlay>
-      <Photo src={src} alt={alt}/>
+      <Photo data-cy='single-collection-photo' src={src} alt={alt}/>
     </Wrapper>
   )
 }

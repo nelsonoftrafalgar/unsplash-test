@@ -13,7 +13,7 @@ export const getCollections = (
   const collectionsArray: IDynamicAssignProp[] = []
   const photoCount = actionType === GET_COLLECTIONS ? 10 : 18
 
-  Promise.all(collectionParams.map((collection: ICollectionParams) => {
+  Promise.all(collectionParams.map(async (collection: ICollectionParams) => {
     return unsplash.collections.getCollectionPhotos(collection.id, page, photoCount, 'latest')
     .then(toJson)
   }))

@@ -5,20 +5,32 @@ import { breakpoint } from '../styles/breakpoints'
 import styled from 'styled-components'
 import { variables } from '../styles/variables'
 
+const {
+  itemsBgColor,
+  borderRadius,
+  boxShadow,
+  breakpointLarge,
+  breakpointMedium,
+  breakpointSmall,
+  fontSize2,
+  fontWeightNormal,
+  fontFamily
+} = variables
+
 const Wrapper = styled.div`
   Width: 95%;
-  background: ${variables.itemsBgColor};
+  background: ${itemsBgColor};
   padding: 10px 10px 0 10px;
-  border-radius: ${variables.borderRadius};
-  box-shadow: ${variables.boxShadow};
+  border-radius: ${borderRadius};
+  box-shadow: ${boxShadow};
   margin-bottom: 20px;
-  ${breakpoint(variables.breakpointSmall, `
+  ${breakpoint(breakpointSmall, `
     width: 45%;
   `)}
-  ${breakpoint(variables.breakpointMedium, `
+  ${breakpoint(breakpointMedium, `
     width: 30%;
   `)}
-  ${breakpoint(variables.breakpointLarge, `
+  ${breakpoint(breakpointLarge, `
     width: 13%;
   `)}
   a {
@@ -35,14 +47,14 @@ const Photos = styled.div`
 const Photo = styled.img`
   width: 100%;
   margin-bottom: 10px;
-  border-radius: ${variables.borderRadius};
+  border-radius: ${borderRadius};
 `
 const Title = styled.h2`
   text-align: center;
-  font-size: ${variables.fontSize2};
-  font-family: ${variables.fontFamily};
+  font-size: ${fontSize2};
+  font-family: ${fontFamily};
   margin-bottom: 10px;
-  font-weight: ${variables.fontWeightNormal};
+  font-weight: ${fontWeightNormal};
 `
 
 const CollectionPreview: React.FC<ICollectionPreview> = ({title, photos, id}) => {
@@ -50,13 +62,13 @@ const CollectionPreview: React.FC<ICollectionPreview> = ({title, photos, id}) =>
   const renderPhotos = photos.map((photo) => {
     const {src, alt} = photo
 
-    return <Photo key={photo.id} src={src} alt={alt}/>
+    return <Photo data-cy='collection-preview-photo' key={photo.id} src={src} alt={alt}/>
   })
 
   return (
-    <Wrapper>
+    <Wrapper data-cy='collection-preview-wrapper'>
       <Link to={id.toString()}>
-        <Title>{title}</Title>
+        <Title data-cy='collection-preview-title'>{title}</Title>
         <Photos>
           {renderPhotos}
         </Photos>

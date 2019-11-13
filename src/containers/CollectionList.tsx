@@ -6,15 +6,20 @@ import { breakpoint } from '../styles/breakpoints'
 import styled from 'styled-components'
 import { variables } from '../styles/variables'
 
+const {
+  bgColor,
+  breakpointSmall
+} = variables
+
 const Wrapper = styled.div`
   width: 100%;
-  background: ${variables.bgColor};
+  background: ${bgColor};
   display: flex;
   justify-content: space-evenly;
   padding: 20px 0;
   flex-direction: column;
   align-items: center;
-  ${breakpoint(variables.breakpointSmall, `
+  ${breakpoint(breakpointSmall, `
     flex-direction: row;
     flex-wrap: wrap;
     align-items: flex-start;
