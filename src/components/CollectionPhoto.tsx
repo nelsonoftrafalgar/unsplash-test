@@ -102,4 +102,4 @@ const CollectionPhoto: React.FC<ICollectionPhotoProps> = ({
   )
 }
 
-export default CollectionPhoto
+export default React.memo(CollectionPhoto)

@@ -6,7 +6,7 @@ import { unsplash } from './unsplash'
 
 export const getCollections = (
   collectionParams: ICollectionParams[],
-  dispatch: React.Dispatch<IAction<ICollectionPreview[]>>,
+  dispatch: React.Dispatch<IAction>,
   actionType: ActionType,
   page: number
 ) => {

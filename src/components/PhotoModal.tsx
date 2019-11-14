@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
-
-import { Context } from '../utils/context'
+import { IPhotoModalProps } from '../utils/model'
+import React from 'react'
 import { breakpoint } from '../styles/breakpoints'
 import styled from 'styled-components'
 import { useGetSinglePhoto } from '../helpers/useGetSinglePhoto'
@@ -113,17 +112,10 @@ const FacebookButton = styled.a`
   text-decoration: none;
 `
 
-interface IPhotoModalProps {
-  handleModalView: (toggle: boolean, id: string) => () => void
-  selecetdPhotoId: string
-}
-
 const PhotoModal: React.FC<IPhotoModalProps> = ({handleModalView, selecetdPhotoId}) => {
-  const {dispatch, singlePhoto} = useContext(Context)
+  const singlePhoto = useGetSinglePhoto(selecetdPhotoId)
 
-  useGetSinglePhoto(dispatch, selecetdPhotoId)
-
-  if (!singlePhoto) {
+  if (!singlePhoto.hasOwnProperty('id')) {
     return (
       <Wrapper>
         <Loading>Loading...</Loading>
@@ -169,7 +161,7 @@ const PhotoModal: React.FC<IPhotoModalProps> = ({handleModalView, selecetdPhotoI
           </Stat>
           <Stat>
             <Text>Added:</Text>
-            {createdAt.substr(0 , 10)}
+            {createdAt.substr(0, 10)}
           </Stat>
         </Stats>
       </PhotoContainer>

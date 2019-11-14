@@ -48,4 +48,4 @@ const Sort: React.FC<ISortProps> = ({activeSort, handleSortChange, title}) => {
   )
 }
 
-export default Sort
+export default React.memo(Sort)

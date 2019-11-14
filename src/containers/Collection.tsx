@@ -1,4 +1,4 @@
-import { CLEAR_CURRENT_COLLECTION, CLEAR_SINGLE_PHOTO, GET_CURRENT_COLLECTION, LOAD_MORE_PHOTOS } from '../utils/actions'
+import { CLEAR_CURRENT_COLLECTION, GET_CURRENT_COLLECTION, LOAD_MORE_PHOTOS } from '../utils/actions'
 import { ICollectionProps, ISortOption } from '../utils/model'
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 
@@ -68,24 +68,23 @@ const Collection: React.FC<ICollectionProps> = ({id, name}) => {
     }
   }, [pageNumber])
 
-  const handleSortChange = (sort: ISortOption | undefined) => {
+  const handleSortChange = useCallback((sort: ISortOption | undefined) => {
     setActiveSort(sort)
-  }
+  }, [])
 
-  const handleModalView = (toggle: boolean, photoId?: string) => () => {
+  const handleModalView = useCallback((toggle: boolean, photoId?: string) => () => {
     document.body.style.overflow = toggle ? 'hidden' : 'visible'
     setIsModalOn(toggle)
-    dispatch({type: CLEAR_SINGLE_PHOTO, payload: undefined})
     if (photoId) {
       setSelecetdPhotoId(photoId)
     }
-  }
+  }, [])
 
   const lastPhotoRef = useCallback((node) => {
     if (observer.current) { observer.current.disconnect() }
     observer.current = new IntersectionObserver((entries) => {
       if (!initialRender.current && entries[0].isIntersecting) {
-        setPageNumber((pageNum) => pageNum + 1)
+        setPageNumber((pageNum: number) => pageNum + 1)
       }
 
       initialRender.current = false

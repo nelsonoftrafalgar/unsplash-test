@@ -21,9 +21,8 @@ export interface ICollectionPreview {
 
 export interface IContext {
   collections: ICollectionPreview[]
-  dispatch: React.Dispatch<IAction<any>>
+  dispatch: React.Dispatch<IAction>
   currentCollection: ICollectionPreview
-  singlePhoto: ISinglePhoto | undefined
 }
 
 export interface ICollectionProps {
@@ -45,20 +44,19 @@ export interface ISortProps {
 export interface IAppState {
   collections: ICollectionPreview[]
   currentCollection: ICollectionPreview
-  singlePhoto: ISinglePhoto | undefined
 }
+
+export type ActionPayload = ICollectionPreview[]
 
 export type ActionType =
 | 'GET_COLLECTIONS'
 | 'GET_CURRENT_COLLECTION'
 | 'LOAD_MORE_PHOTOS'
 | 'CLEAR_CURRENT_COLLECTION'
-| 'GET_SINGLE_PHOTO'
-| 'CLEAR_SINGLE_PHOTO'
 
-export interface IAction<T> {
+export interface IAction {
   type: ActionType
-  payload: T
+  payload: ActionPayload
 }
 
 export type PhotoRef = (node: HTMLDivElement) => void
@@ -77,4 +75,9 @@ export interface ISinglePhoto {
   views: number
   url: string
   alt: string
+}
+
+export interface IPhotoModalProps {
+  handleModalView: (toggle: boolean, id: string) => () => void
+  selecetdPhotoId: string
 }
