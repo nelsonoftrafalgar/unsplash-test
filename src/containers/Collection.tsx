@@ -1,10 +1,10 @@
 import { CLEAR_CURRENT_COLLECTION, GET_CURRENT_COLLECTION, LOAD_MORE_PHOTOS } from '../utils/actions'
-import { ICollectionProps, ISortOption } from '../utils/model'
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { getCollectionPhotos, parseCollectionsReponse } from '../helpers/unsplash'
 
 import CollectionPhoto from '../components/CollectionPhoto'
 import { Context } from '../utils/context'
+import { ISortOption } from '../utils/model'
 import PhotoModal from '../components/PhotoModal'
 import Sort from '../components/Sort'
 import { breakpoint } from '../styles/breakpoints'
@@ -56,7 +56,7 @@ const Collection: React.FC<IProps> = ({ id }) => {
   const getPhotos = async (type: any, pageNumber: number) => {
     const response = await getCollectionPhotos(id, pageNumber)
     const collection = parseCollectionsReponse([response])
-    dispatch({ type, payload: collection })
+    dispatch({ type, payload: collection! })
   }
 
   useEffect(() => {

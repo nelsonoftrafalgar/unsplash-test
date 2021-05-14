@@ -53,7 +53,7 @@ export interface IAppState {
 
 export type ActionPayload = ICollectionPreview[]
 
-export type ActionType = 'GET_COLLECTIONS' | 'GET_CURRENT_COLLECTION' | 'LOAD_MORE_PHOTOS' | 'CLEAR_CURRENT_COLLECTION'
+export type ActionType = 'GET_CURRENT_COLLECTION' | 'LOAD_MORE_PHOTOS' | 'CLEAR_CURRENT_COLLECTION'
 
 export interface IAction {
   type: ActionType

@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
+import { getCollections, parseCollectionsReponse } from '../helpers/unsplash'
 
 import CollectionPreview from '../components/CollectionPreview'
-import { Context } from '../utils/context'
 import { breakpoint } from '../styles/breakpoints'
 import styled from 'styled-components'
+import { useQuery } from 'react-query'
 import { variables } from '../styles/variables'
 
 const { bgColor, breakpointSmall } = variables
@@ -27,11 +27,12 @@ const Wrapper = styled.div`
 `
 
 const CollectionList = () => {
-  const { collections } = useContext(Context)
+  const query = useQuery('collections', getCollections)
+  const collections = parseCollectionsReponse(query.data)
 
   return (
     <Wrapper>
-      {collections.map((collection) => (
+      {collections?.map((collection) => (
         <CollectionPreview key={collection.id} {...collection} />
       ))}
     </Wrapper>

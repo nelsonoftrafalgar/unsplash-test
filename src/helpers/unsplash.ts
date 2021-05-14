@@ -36,19 +36,17 @@ interface ICollectionsResponse {
   }
 }
 
-export const parseCollectionsReponse = (collections: ICollectionsResponse[]) => {
-  return collections.map((collection, idx) => {
-    const photos =
-      collection.response &&
-      collection.response.results.map(({ id, urls: { thumb }, alt_description, likes, created_at }) => {
-        return {
-          id,
-          src: thumb,
-          alt: alt_description,
-          likes,
-          createdAt: created_at,
-        }
-      })
+export const parseCollectionsReponse = (collections?: ICollectionsResponse[]) => {
+  return collections?.map((collection, idx) => {
+    const photos = collection.response?.results.map(({ id, urls: { thumb }, alt_description, likes, created_at }) => {
+      return {
+        id,
+        src: thumb,
+        alt: alt_description,
+        likes,
+        createdAt: created_at,
+      }
+    })
 
     return {
       id: COLLECTION_PARAMS[idx].id,
