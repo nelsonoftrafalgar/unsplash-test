@@ -20,7 +20,7 @@ export interface ICollectionPreview {
 	id: number
 	title: string
 	slug: string
-	photos: IPrevievPhoto[]
+	photos?: IPrevievPhoto[]
 }
 
 export interface IContext {
@@ -32,6 +32,7 @@ export interface IContext {
 export interface ICollectionProps {
 	id: number
 	name: string
+	slug: string
 }
 
 export interface ISortOption {

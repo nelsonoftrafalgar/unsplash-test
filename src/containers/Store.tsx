@@ -1,10 +1,9 @@
 import React, { FC, useEffect, useReducer } from 'react'
+import { getCollections, parseCollectionsReponse } from '../helpers/unsplash'
 
-import { COLLECTION_PARAMS } from '../utils/data'
 import { Context } from '../utils/context'
 import { GET_COLLECTIONS } from '../utils/actions'
 import { IAppState } from '../utils/model'
-import { getCollections } from '../helpers/getCollections'
 import { reducer } from '../utils/reducers'
 
 const Store: FC = ({ children }) => {
@@ -20,8 +19,14 @@ const Store: FC = ({ children }) => {
 
 	const [appState, dispatch] = useReducer(reducer, initialState)
 
+	const getTestCollections = async () => {
+		const response = await getCollections()
+		const collections = parseCollectionsReponse(response)
+		dispatch({ type: GET_COLLECTIONS, payload: collections })
+	}
+
 	useEffect(() => {
-		getCollections(COLLECTION_PARAMS, dispatch, GET_COLLECTIONS, 1)
+		getTestCollections()
 	}, [])
 
 	const { collections, currentCollection } = appState

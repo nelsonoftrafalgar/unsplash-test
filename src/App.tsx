@@ -16,11 +16,6 @@ const StyleReset = createGlobalStyle`
 }`
 
 const App = () => {
-	const renderRoutes = COLLECTION_PARAMS.map((collection) => {
-		const { id, slug } = collection
-		return <Route key={id} path={`/${slug}`} render={() => <Collection {...collection} />} />
-	})
-
 	return (
 		<>
 			<StyleReset />
@@ -28,7 +23,9 @@ const App = () => {
 				<Router>
 					<Switch>
 						<Route exact={true} path='/' component={CollectionList} />
-						{renderRoutes}
+						{COLLECTION_PARAMS.map(({ id, slug }) => (
+							<Route key={id} path={`/${slug}`} render={() => <Collection id={id} />} />
+						))}
 					</Switch>
 				</Router>
 			</Store>
