@@ -14,5 +14,5 @@ export const variables = {
   fontSize3: '20px',
   fontSize4: '25px',
   fontWeightNormal: '400',
-  fontWeightBold: '700'
+  fontWeightBold: '700',
 }

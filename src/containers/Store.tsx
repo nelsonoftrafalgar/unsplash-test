@@ -7,41 +7,41 @@ import { IAppState } from '../utils/model'
 import { reducer } from '../utils/reducers'
 
 const Store: FC = ({ children }) => {
-	const initialState: IAppState = {
-		collections: [],
-		currentCollection: {
-			id: 0,
-			title: '',
-			slug: '',
-			photos: [],
-		},
-	}
+  const initialState: IAppState = {
+    collections: [],
+    currentCollection: {
+      id: 0,
+      title: '',
+      slug: '',
+      photos: [],
+    },
+  }
 
-	const [appState, dispatch] = useReducer(reducer, initialState)
+  const [appState, dispatch] = useReducer(reducer, initialState)
 
-	const getTestCollections = async () => {
-		const response = await getCollections()
-		const collections = parseCollectionsReponse(response)
-		dispatch({ type: GET_COLLECTIONS, payload: collections })
-	}
+  const getTestCollections = async () => {
+    const response = await getCollections()
+    const collections = parseCollectionsReponse(response)
+    dispatch({ type: GET_COLLECTIONS, payload: collections })
+  }
 
-	useEffect(() => {
-		getTestCollections()
-	}, [])
+  useEffect(() => {
+    getTestCollections()
+  }, [])
 
-	const { collections, currentCollection } = appState
+  const { collections, currentCollection } = appState
 
-	return (
-		<Context.Provider
-			value={{
-				collections,
-				dispatch,
-				currentCollection,
-			}}
-		>
-			{children}
-		</Context.Provider>
-	)
+  return (
+    <Context.Provider
+      value={{
+        collections,
+        dispatch,
+        currentCollection,
+      }}
+    >
+      {children}
+    </Context.Provider>
+  )
 }
 
 export default Store

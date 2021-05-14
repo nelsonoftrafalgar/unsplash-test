@@ -16,21 +16,21 @@ const StyleReset = createGlobalStyle`
 }`
 
 const App = () => {
-	return (
-		<>
-			<StyleReset />
-			<Store>
-				<Router>
-					<Switch>
-						<Route exact={true} path='/' component={CollectionList} />
-						{COLLECTION_PARAMS.map(({ id, slug }) => (
-							<Route key={id} path={`/${slug}`} render={() => <Collection id={id} />} />
-						))}
-					</Switch>
-				</Router>
-			</Store>
-		</>
-	)
+  return (
+    <>
+      <StyleReset />
+      <Store>
+        <Router>
+          <Switch>
+            <Route exact={true} path="/" component={CollectionList} />
+            {COLLECTION_PARAMS.map(({ id, slug }) => (
+              <Route key={id} path={`/${slug}`} render={() => <Collection id={id} />} />
+            ))}
+          </Switch>
+        </Router>
+      </Store>
+    </>
+  )
 }
 
 export default App

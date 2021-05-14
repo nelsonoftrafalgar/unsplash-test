@@ -1,14 +1,7 @@
 import { StylesConfig } from 'react-select/src/styles'
 import { variables } from './variables'
 
-const {
-  borderRadius,
-  fontColor,
-  itemsBgColor,
-  boxShadow,
-  fontFamily,
-  fontSize2
-} = variables
+const { borderRadius, fontColor, itemsBgColor, boxShadow, fontFamily, fontSize2 } = variables
 
 export const SELECT_STYLES: StylesConfig = {
   container: (base) => {
@@ -21,78 +14,78 @@ export const SELECT_STYLES: StylesConfig = {
       boxShadow: `${boxShadow}`,
       marginTop: '25px',
       input: {
-        textIndent: '-999999999em'
-      }
+        textIndent: '-999999999em',
+      },
     }
   },
   valueContainer: (base) => {
     return {
       ...base,
       paddingLeft: 5,
-      color: `${fontColor}`
+      color: `${fontColor}`,
     }
   },
   control: () => {
     return {
-      'display': 'flex',
-      'fontSize': `${fontSize2}`,
-      'fontFamily': `${fontFamily}`,
-      'color': `${fontColor}`,
-      'justifyContent': 'center',
+      display: 'flex',
+      fontSize: `${fontSize2}`,
+      fontFamily: `${fontFamily}`,
+      color: `${fontColor}`,
+      justifyContent: 'center',
       '&:hover': {
         cursor: 'pointer',
-        opacity: '.6'
-      }
+        opacity: '.6',
+      },
     }
   },
   menuList: () => {
     return {
-      background: `${itemsBgColor}`
+      background: `${itemsBgColor}`,
     }
   },
   option: (styles) => {
     return {
       ...styles,
-      fontFamily: `${fontFamily}`
+      fontFamily: `${fontFamily}`,
     }
   },
   placeholder: (base) => {
     return {
       ...base,
-      color: `${fontColor}`
+      color: `${fontColor}`,
     }
   },
   indicatorSeparator: () => {
     return {
-      display: 'none'
+      display: 'none',
     }
   },
   dropdownIndicator: (base) => {
     return {
       ...base,
-      ':hover': {color: `${fontColor}`},
-      'cursor': 'pointer',
-      'color': `${fontColor}`,
-      'padding': '0 8px',
-      'marginBottom': '4px',
-      'width': '32px',
-      'height': '32px',
-      'svg': {
+      ':hover': { color: `${fontColor}` },
+      cursor: 'pointer',
+      color: `${fontColor}`,
+      padding: '0 8px',
+      marginBottom: '4px',
+      width: '32px',
+      height: '32px',
+      svg: {
         width: '32px',
-        height: '32px'
-      }
+        height: '32px',
+      },
     }
   },
   singleValue: (styles) => {
     return {
       ...styles,
-      color: `${fontColor}`
+      color: `${fontColor}`,
     }
   },
   clearIndicator: () => {
     return {
       color: `${fontColor}`,
-      paddingTop: '2px'
+      paddingTop: '2px',
     }
-  }
+  },
 }

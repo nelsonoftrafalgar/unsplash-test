@@ -13,26 +13,35 @@ const {
   breakpointSmall,
   fontSize3,
   fontSize4,
-  fontFamily
+  fontFamily,
 } = variables
 
 const Wrapper = styled.div`
   position: relative;
-  Width: 95%;
+  width: 95%;
   background: ${itemsBgColor};
   padding: 10px 10px 0 10px;
   border-radius: ${borderRadius};
   box-shadow: ${boxShadow};
   margin: 15px;
-  ${breakpoint(breakpointSmall, `
+  ${breakpoint(
+    breakpointSmall,
+    `
     width: 45%;
-  `)}
-  ${breakpoint(breakpointMedium, `
+  `
+  )}
+  ${breakpoint(
+    breakpointMedium,
+    `
     width: 30%;
-  `)}
-  ${breakpoint(breakpointLarge, `
+  `
+  )}
+  ${breakpoint(
+    breakpointLarge,
+    `
     width: 13%;
-  `)}
+  `
+  )}
 `
 
 const Photo = styled.img`
@@ -50,7 +59,7 @@ const Overlay = styled.button`
   left: 0;
   border-radius: ${borderRadius};
   opacity: 0;
-  transition: opacity .3s ease;
+  transition: opacity 0.3s ease;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -58,7 +67,7 @@ const Overlay = styled.button`
   cursor: pointer;
 
   &:hover {
-    opacity: .7;
+    opacity: 0.7;
   }
 `
 
@@ -66,10 +75,13 @@ const Stat = styled.p`
   margin: 10px 0;
   font-size: ${fontSize4};
   font-family: ${fontFamily};
-  ${breakpoint(breakpointLarge, `
+  ${breakpoint(
+    breakpointLarge,
+    `
     margin: 5px 0;
     font-size: ${fontSize3};
-  `)}
+  `
+  )}
 `
 
 const Icon = styled.span`
@@ -83,21 +95,18 @@ const CollectionPhoto: React.FC<ICollectionPhotoProps> = ({
   likes,
   lastPhotoRef,
   id,
-  createdAt
+  createdAt,
 }) => {
-
   return (
-    <Wrapper data-cy='single-collection-photo-wrapper' ref={lastPhotoRef}>
-      <Overlay data-cy='single-collection-photo-overlay' onClick={handleModalView(true, id)}>
+    <Wrapper data-cy="single-collection-photo-wrapper" ref={lastPhotoRef}>
+      <Overlay data-cy="single-collection-photo-overlay" onClick={handleModalView(true, id)}>
         <Stat>
           <Icon>&#9733;</Icon>
           {likes}
         </Stat>
-        <Stat>
-          {createdAt.substring(0, 10)}
-        </Stat>
+        <Stat>{createdAt.substring(0, 10)}</Stat>
       </Overlay>
-      <Photo data-cy='single-collection-photo' src={src} alt={alt}/>
+      <Photo data-cy="single-collection-photo" src={src} alt={alt} />
     </Wrapper>
   )
 }
