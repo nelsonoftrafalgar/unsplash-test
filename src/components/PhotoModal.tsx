@@ -1,9 +1,7 @@
-import { IPhotoModalProps, ISinglePhoto } from '../utils/model'
-import React, { useEffect, useState } from 'react'
-import { getSinglePhoto, parseSinglePhotoResponse } from '../helpers/unsplash'
-
+import { IPhotoModalProps } from '../utils/model'
 import { breakpoint } from '../styles/breakpoints'
 import styled from 'styled-components'
+import { usePhoto } from '../unsplash/usePhoto'
 import { variables } from '../styles/variables'
 
 const {
@@ -106,17 +104,7 @@ const Stats = styled.div`
 `
 
 const PhotoModal: React.FC<IPhotoModalProps> = ({ handleModalView, selecetdPhotoId }) => {
-  const [singlePhoto, setSinglePhoto] = useState<ISinglePhoto | null>(null)
-
-  const getPhoto = async (photoId: string) => {
-    const response = await getSinglePhoto(photoId)
-    const photo = parseSinglePhotoResponse(response)
-    setSinglePhoto(photo)
-  }
-
-  useEffect(() => {
-    getPhoto(selecetdPhotoId)
-  }, [])
+  const singlePhoto = usePhoto(selecetdPhotoId)
 
   if (!singlePhoto) {
     return (

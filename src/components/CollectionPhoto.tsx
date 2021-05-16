@@ -1,4 +1,3 @@
-import { ICollectionPhotoProps } from '../utils/model'
 import React from 'react'
 import { breakpoint } from '../styles/breakpoints'
 import styled from 'styled-components'
@@ -88,15 +87,17 @@ const Icon = styled.span`
   margin-right: 10px;
 `
 
-const CollectionPhoto: React.FC<ICollectionPhotoProps> = ({
-  handleModalView,
-  src,
-  alt,
-  likes,
-  lastPhotoRef,
-  id,
-  createdAt,
-}) => {
+interface IProps {
+  id?: string
+  alt?: string
+  src?: string
+  likes?: number
+  createdAt?: string
+  handleModalView: (toggle: boolean, id?: string) => () => void
+  lastPhotoRef?: (node: HTMLDivElement) => void
+}
+
+const CollectionPhoto: React.FC<IProps> = ({ handleModalView, src, alt, likes, lastPhotoRef, id, createdAt }) => {
   return (
     <Wrapper data-cy="single-collection-photo-wrapper" ref={lastPhotoRef}>
       <Overlay data-cy="single-collection-photo-overlay" onClick={handleModalView(true, id)}>
@@ -104,7 +105,7 @@ const CollectionPhoto: React.FC<ICollectionPhotoProps> = ({
           <Icon>&#9733;</Icon>
           {likes}
         </Stat>
-        <Stat>{createdAt.substring(0, 10)}</Stat>
+        <Stat>{createdAt?.substring(0, 10)}</Stat>
       </Overlay>
       <Photo data-cy="single-collection-photo" src={src} alt={alt} />
     </Wrapper>

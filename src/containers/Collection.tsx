@@ -1,15 +1,13 @@
-import { CLEAR_CURRENT_COLLECTION, GET_CURRENT_COLLECTION, LOAD_MORE_PHOTOS } from '../utils/actions'
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
-import { getCollectionPhotos, parseCollectionsReponse } from '../helpers/unsplash'
+import { useCallback, useRef, useState } from 'react'
 
 import CollectionPhoto from '../components/CollectionPhoto'
-import { Context } from '../utils/context'
 import { ISortOption } from '../utils/model'
 import PhotoModal from '../components/PhotoModal'
 import Sort from '../components/Sort'
 import { breakpoint } from '../styles/breakpoints'
 import { sortType } from '../helpers/sortType'
 import styled from 'styled-components'
+import { useCollection } from '../unsplash/useCollection'
 import { variables } from '../styles/variables'
 
 const { fontColor, bgColor, breakpointSmall, fontSize3, fontFamily } = variables
@@ -45,35 +43,14 @@ interface IProps {
 }
 
 const Collection: React.FC<IProps> = ({ id }) => {
-  const { currentCollection, dispatch } = useContext(Context)
   const [isModalOn, setIsModalOn] = useState(false)
   const [activeSort, setActiveSort] = useState<ISortOption | undefined>(undefined)
-  const [pageNumber, setPageNumber] = useState(1)
   const [selecetdPhotoId, setSelecetdPhotoId] = useState('')
   const observer = useRef<IntersectionObserver>()
   const initialRender = useRef(true)
+  const { fetchNextPage, hasNextPage, currentCollection } = useCollection(id)
 
-  const getPhotos = async (type: any, pageNumber: number) => {
-    const response = await getCollectionPhotos(id, pageNumber)
-    const collection = parseCollectionsReponse([response])
-    dispatch({ type, payload: collection! })
-  }
-
-  useEffect(() => {
-    if (pageNumber === 1) {
-      getPhotos(GET_CURRENT_COLLECTION, pageNumber)
-    } else {
-      getPhotos(LOAD_MORE_PHOTOS, pageNumber)
-    }
-  }, [pageNumber])
-
-  useEffect(() => {
-    return () => {
-      dispatch({ type: CLEAR_CURRENT_COLLECTION, payload: [] })
-    }
-  }, [])
-
-  const handleSortChange = useCallback((sort: ISortOption | undefined) => {
+  const handleSortChange = useCallback((sort?: ISortOption) => {
     setActiveSort(sort)
   }, [])
 
@@ -88,33 +65,35 @@ const Collection: React.FC<IProps> = ({ id }) => {
     []
   )
 
-  const lastPhotoRef = useCallback((node) => {
-    if (observer.current) {
-      observer.current.disconnect()
-    }
-    observer.current = new IntersectionObserver(
-      (entries) => {
-        if (!initialRender.current && entries[0].isIntersecting) {
-          setPageNumber((pageNum: number) => pageNum + 1)
-        }
-
-        initialRender.current = false
-      },
-      { threshold: 0.25 }
-    )
-    if (node) {
-      observer.current.observe(node)
-    }
-  }, [])
+  const lastPhotoRef = useCallback(
+    (node) => {
+      if (observer.current) {
+        observer.current.disconnect()
+      }
+      observer.current = new IntersectionObserver(
+        (entries) => {
+          if (!initialRender.current && entries[0].isIntersecting && hasNextPage) {
+            fetchNextPage()
+          }
+          initialRender.current = false
+        },
+        { threshold: 0.25 }
+      )
+      if (node) {
+        observer.current.observe(node)
+      }
+    },
+    [fetchNextPage, hasNextPage]
+  )
 
   const renderPhotos = currentCollection ? (
-    [...currentCollection.photos!].sort(sortType(activeSort)).map((photo, i, arr) => {
+    currentCollection.photos?.sort(sortType(activeSort)).map((photo, i, arr) => {
       if (arr.length === i + 1) {
         return (
-          <CollectionPhoto lastPhotoRef={lastPhotoRef} key={photo.id} handleModalView={handleModalView} {...photo} />
+          <CollectionPhoto lastPhotoRef={lastPhotoRef} key={photo?.id} handleModalView={handleModalView} {...photo} />
         )
       } else {
-        return <CollectionPhoto key={photo.id} handleModalView={handleModalView} {...photo} />
+        return <CollectionPhoto key={photo?.id} handleModalView={handleModalView} {...photo} />
       }
     })
   ) : (

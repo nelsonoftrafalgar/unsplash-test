@@ -72,10 +72,9 @@ const CollectionPreview: React.FC<ICollectionPreview> = ({ title, photos, slug }
       <Link to={slug}>
         <Title data-cy="collection-preview-title">{title}</Title>
         <Photos>
-          {photos &&
-            photos.map(({ src, alt, id }) => {
-              return <Photo data-cy="collection-preview-photo" key={id} src={src} alt={alt} />
-            })}
+          {photos?.map(({ src, alt, id }) => {
+            return <Photo data-cy="collection-preview-photo" key={id} src={src} alt={alt} />
+          })}
         </Photos>
       </Link>
     </Wrapper>

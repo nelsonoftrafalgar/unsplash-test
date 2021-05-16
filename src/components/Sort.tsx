@@ -1,9 +1,9 @@
 import { ISortProps } from '../utils/model'
 import React from 'react'
 import { SELECT_STYLES } from '../styles/sort'
+import { SORT_OPTIONS } from '../utils/constants'
 import Select from 'react-select'
 import { breakpoint } from '../styles/breakpoints'
-import { sortOptions } from '../utils/data'
 import styled from 'styled-components'
 import { variables } from '../styles/variables'
 
@@ -35,7 +35,7 @@ const Sort: React.FC<ISortProps> = ({ activeSort, handleSortChange, title }) => 
     <Wrapper data-cy="single-collection-sort-select">
       <Title data-cy="single-collection-title">{title}</Title>
       <Select
-        options={sortOptions}
+        options={SORT_OPTIONS}
         value={activeSort}
         onChange={handleSortChange as any}
         placeholder="Sort by..."
