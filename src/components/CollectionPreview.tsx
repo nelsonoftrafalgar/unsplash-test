@@ -1,4 +1,3 @@
-import { ICollectionPreview } from '../utils/model'
 import { Link } from 'react-router-dom'
 import React from 'react'
 import { breakpoint } from '../styles/breakpoints'
@@ -66,7 +65,20 @@ const Title = styled.h2`
   font-weight: ${fontWeightNormal};
 `
 
-const CollectionPreview: React.FC<ICollectionPreview> = ({ title, photos, slug }) => {
+interface IProps {
+  id: number
+  title: string
+  slug: string
+  photos?: Array<{
+    id: string
+    alt: string
+    src: string
+    likes: number
+    createdAt: string
+  }>
+}
+
+const CollectionPreview: React.FC<IProps> = ({ title, photos, slug }) => {
   return (
     <Wrapper data-cy="collection-preview-wrapper">
       <Link to={slug}>

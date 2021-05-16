@@ -44,13 +44,13 @@ interface IProps {
 
 const Collection: React.FC<IProps> = ({ id }) => {
   const [isModalOn, setIsModalOn] = useState(false)
-  const [activeSort, setActiveSort] = useState<ISortOption | undefined>(undefined)
+  const [activeSort, setActiveSort] = useState<ISortOption | null>(null)
   const [selecetdPhotoId, setSelecetdPhotoId] = useState('')
   const observer = useRef<IntersectionObserver>()
   const initialRender = useRef(true)
   const { fetchNextPage, hasNextPage, currentCollection } = useCollection(id)
 
-  const handleSortChange = useCallback((sort?: ISortOption) => {
+  const handleSortChange = useCallback((sort: ISortOption | null) => {
     setActiveSort(sort)
   }, [])
 

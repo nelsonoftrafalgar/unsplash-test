@@ -1,6 +1,6 @@
 import { IPrevievPhoto, ISortOption } from '../utils/model'
 
-export const sortType = (type?: ISortOption) => (a?: IPrevievPhoto, b?: IPrevievPhoto) => {
+export const sortType = (type: ISortOption | null) => (a?: IPrevievPhoto, b?: IPrevievPhoto) => {
   const convert = (str: string) => +str.replace(/[^0-9]/g, '')
 
   if (!a || !b) return 0

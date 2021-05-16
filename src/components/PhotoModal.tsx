@@ -1,4 +1,3 @@
-import { IPhotoModalProps } from '../utils/model'
 import { breakpoint } from '../styles/breakpoints'
 import styled from 'styled-components'
 import { usePhoto } from '../unsplash/usePhoto'
@@ -103,7 +102,12 @@ const Stats = styled.div`
   )}
 `
 
-const PhotoModal: React.FC<IPhotoModalProps> = ({ handleModalView, selecetdPhotoId }) => {
+export interface IProps {
+  handleModalView: (toggle: boolean, id: string) => () => void
+  selecetdPhotoId: string
+}
+
+const PhotoModal: React.FC<IProps> = ({ handleModalView, selecetdPhotoId }) => {
   const singlePhoto = usePhoto(selecetdPhotoId)
 
   if (!singlePhoto) {

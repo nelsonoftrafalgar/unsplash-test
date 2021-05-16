@@ -1,4 +1,4 @@
-import { ISortProps } from '../utils/model'
+import { ISortOption } from '../utils/model'
 import React from 'react'
 import { SELECT_STYLES } from '../styles/sort'
 import { SORT_OPTIONS } from '../utils/constants'
@@ -30,14 +30,20 @@ const Title = styled.h1`
   font-size: ${fontSize3};
 `
 
-const Sort: React.FC<ISortProps> = ({ activeSort, handleSortChange, title }) => {
+interface IProps {
+  title?: string
+  activeSort: ISortOption | null
+  handleSortChange: (sort: ISortOption | null) => void
+}
+
+const Sort: React.FC<IProps> = ({ activeSort, handleSortChange, title }) => {
   return (
     <Wrapper data-cy="single-collection-sort-select">
       <Title data-cy="single-collection-title">{title}</Title>
       <Select
         options={SORT_OPTIONS}
         value={activeSort}
-        onChange={handleSortChange as any}
+        onChange={handleSortChange}
         placeholder="Sort by..."
         isClearable={true}
         styles={SELECT_STYLES}
