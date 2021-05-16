@@ -104,7 +104,7 @@ const Stats = styled.div`
 `
 
 export interface IProps {
-  handleModalView: (toggle: boolean, id: string) => () => void
+  handleModalView: (toggle: boolean, id?: string) => () => void
   selecetdPhotoId: string
 }
 
@@ -125,7 +125,7 @@ const PhotoModal: React.FC<IProps> = ({ handleModalView, selecetdPhotoId }) => {
     <Wrapper>
       <PhotoContainer data-cy="single-photo-modal">
         <Image data-cy="modal-photo" src={url} alt={alt} />
-        <CloseButton data-cy="single-photo-modal-close" onClick={handleModalView(false, '')}>
+        <CloseButton data-cy="single-photo-modal-close" onClick={handleModalView(false)}>
           &#10005;
         </CloseButton>
         <Stats data-cy="photo-description">

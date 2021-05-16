@@ -1,16 +1,12 @@
 import { COLLECTION_PARAMS, UNSPLASH } from '../utils/constants'
 
+import { IPhoto } from '../utils/model'
+import { parsePhoto } from '../helpers/parsePhoto'
 import { useQuery } from 'react-query'
 
 interface IResponse {
   response?: {
-    results: Array<{
-      id: string
-      urls: { thumb: string }
-      alt_description: string
-      likes: number
-      created_at: string
-    }>
+    results: IPhoto[]
   }
 }
 
@@ -24,15 +20,7 @@ const getCollections = async () => {
 
 const parseReponse = (collections?: IResponse[]) => {
   return collections?.map((collection, idx) => {
-    const photos = collection.response?.results.map(({ id, urls: { thumb }, alt_description, likes, created_at }) => {
-      return {
-        id,
-        src: thumb,
-        alt: alt_description,
-        likes,
-        createdAt: created_at,
-      }
-    })
+    const photos = collection.response?.results.map(parsePhoto)
 
     return {
       id: COLLECTION_PARAMS[idx].id,

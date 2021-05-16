@@ -1,15 +1,11 @@
 import { COLLECTION_PARAMS, UNSPLASH } from '../utils/constants'
 
+import { IPhoto } from '../utils/model'
+import { parsePhoto } from '../helpers/parsePhoto'
 import { useInfiniteQuery } from 'react-query'
 
 interface IResponse {
-  results?: Array<{
-    id: string
-    urls: { thumb: string }
-    alt_description: string
-    likes: number
-    created_at: string
-  }>
+  results?: IPhoto[]
   nextPage: number
 }
 
@@ -30,15 +26,7 @@ const getPhotos = async (collectionId: number, page: number) => {
 const parseReponse = (collectionId: number, collections?: IResponse[]) => {
   const currentCollection = COLLECTION_PARAMS.find((collection) => collection.id === collectionId)
   const photos = collections?.flatMap((collection) => {
-    return collection.results?.map(({ id, urls: { thumb }, alt_description, likes, created_at }) => {
-      return {
-        id,
-        src: thumb,
-        alt: alt_description,
-        likes,
-        createdAt: created_at,
-      }
-    })
+    return collection.results?.map(parsePhoto)
   })
   return {
     id: currentCollection?.id,

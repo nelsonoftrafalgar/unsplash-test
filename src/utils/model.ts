@@ -4,6 +4,14 @@ export interface ICollectionParams {
   slug: string
 }
 
+export interface IPhoto {
+  id: string
+  urls: { thumb: string }
+  alt_description: string
+  likes: number
+  created_at: string
+}
+
 export interface IPrevievPhoto {
   id: string
   alt: string

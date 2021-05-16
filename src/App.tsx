@@ -23,7 +23,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <Router>
           <Switch>
-            <Route exact={true} path="/" component={CollectionList} />
+            <Route exact path="/" component={CollectionList} />
             {COLLECTION_PARAMS.map(({ id, slug }) => (
               <Route key={id} path={`/${slug}`} render={() => <Collection id={id} />} />
             ))}

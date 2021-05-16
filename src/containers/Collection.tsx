@@ -49,6 +49,7 @@ const Collection: React.FC<IProps> = ({ id }) => {
   const observer = useRef<IntersectionObserver>()
   const initialRender = useRef(true)
   const { fetchNextPage, hasNextPage, currentCollection } = useCollection(id)
+  const collectionTitle = currentCollection ? currentCollection.title : 'Loading...'
 
   const handleSortChange = useCallback((sort: ISortOption | null) => {
     setActiveSort(sort)
@@ -88,19 +89,17 @@ const Collection: React.FC<IProps> = ({ id }) => {
 
   const renderPhotos = currentCollection ? (
     currentCollection.photos?.sort(sortType(activeSort)).map((photo, i, arr) => {
-      if (arr.length === i + 1) {
-        return (
-          <CollectionPhoto lastPhotoRef={lastPhotoRef} key={photo?.id} handleModalView={handleModalView} {...photo} />
-        )
-      } else {
-        return <CollectionPhoto key={photo?.id} handleModalView={handleModalView} {...photo} />
+      const props = {
+        ...photo,
+        handleModalView,
+        lastPhotoRef: arr.length === i + 1 ? lastPhotoRef : undefined,
       }
+
+      return <CollectionPhoto key={photo?.id} {...props} />
     })
   ) : (
     <Loading>Loading...</Loading>
   )
-
-  const collectionTitle = currentCollection ? currentCollection.title : 'Loading...'
 
   return (
     <>
