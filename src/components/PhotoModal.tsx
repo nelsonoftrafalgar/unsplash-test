@@ -8,8 +8,8 @@ const {
   borderRadius,
   lightFontColor,
   fontColor,
-  breakpointMedium,
   breakpointSmall,
+  breakpointLarge,
   fontSize1,
   fontSize2,
   fontSize3,
@@ -43,18 +43,19 @@ const PhotoContainer = styled.div`
 `
 
 const Image = styled.img`
-  width: 60%;
+  width: auto;
+  height: auto;
+  max-width: 80%;
   ${breakpoint(
     breakpointSmall,
     `
-    height: 30vw;
-    width: unset;
+    max-height: 60%;
   `
   )}
   ${breakpoint(
-    breakpointMedium,
+    breakpointLarge,
     `
-    height: 40vw;
+    max-height: 90%;
   `
   )}
 `
