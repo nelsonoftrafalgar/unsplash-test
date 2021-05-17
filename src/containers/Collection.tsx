@@ -48,7 +48,7 @@ const Collection: React.FC<IProps> = ({ id }) => {
   const [selecetdPhotoId, setSelecetdPhotoId] = useState('')
   const observer = useRef<IntersectionObserver>()
   const initialRender = useRef(true)
-  const { fetchNextPage, hasNextPage, currentCollection } = useCollection(id)
+  const { fetchNextPage, hasNextPage, currentCollection, isLoading } = useCollection(id)
   const collectionTitle = currentCollection ? currentCollection.title : 'Loading...'
 
   const handleSortChange = useCallback((sort: ISortOption | null) => {
@@ -87,24 +87,20 @@ const Collection: React.FC<IProps> = ({ id }) => {
     [fetchNextPage, hasNextPage]
   )
 
-  const renderPhotos = currentCollection ? (
-    currentCollection.photos?.sort(sortType(activeSort)).map((photo, i, arr) => {
-      const props = {
-        ...photo,
-        handleModalView,
-        lastPhotoRef: arr.length === i + 1 ? lastPhotoRef : undefined,
-      }
+  const renderPhotos = currentCollection.photos?.sort(sortType(activeSort)).map((photo, i, arr) => {
+    const props = {
+      ...photo,
+      handleModalView,
+      lastPhotoRef: arr.length === i + 1 ? lastPhotoRef : undefined,
+    }
 
-      return <CollectionPhoto key={photo?.id} {...props} />
-    })
-  ) : (
-    <Loading>Loading...</Loading>
-  )
+    return <CollectionPhoto key={photo?.id} {...props} />
+  })
 
   return (
     <>
       <Sort title={collectionTitle} activeSort={activeSort} handleSortChange={handleSortChange} />
-      <Wrapper>{renderPhotos}</Wrapper>
+      <Wrapper>{isLoading ? <Loading>Loading...</Loading> : renderPhotos}</Wrapper>
       {isModalOn && <PhotoModal selecetdPhotoId={selecetdPhotoId} handleModalView={handleModalView} />}
     </>
   )

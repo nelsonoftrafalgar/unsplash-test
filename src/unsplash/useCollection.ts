@@ -37,7 +37,7 @@ const parseReponse = (collectionId: number, collections?: IResponse[]) => {
 }
 
 export const useCollection = (id: number) => {
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
+  const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
     ['collection', id],
     ({ pageParam = 1 }) => getPhotos(id, pageParam),
     {
@@ -47,5 +47,5 @@ export const useCollection = (id: number) => {
   )
   const currentCollection = parseReponse(id, data?.pages)
 
-  return { fetchNextPage, hasNextPage, currentCollection }
+  return { fetchNextPage, hasNextPage, currentCollection, isLoading }
 }
