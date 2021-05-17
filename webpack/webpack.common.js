@@ -2,7 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: path.resolve(__dirname, '..', './src/index.tsx'),
+  entry: ['./src/index.tsx'],
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
@@ -28,8 +28,8 @@ module.exports = {
     ],
   },
   output: {
-    path: path.resolve(__dirname, '..', '/build'),
-    filename: 'bundle.js',
+    path: path.join(__dirname, '..', '/build'),
+    filename: 'bundle.min.js',
     publicPath: '/',
   },
   devServer: {
