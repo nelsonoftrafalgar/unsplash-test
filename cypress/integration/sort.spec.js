@@ -1,7 +1,6 @@
-
 describe('Single collection', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:8080/162326')
+    cy.visit('http://localhost:8080/spooky')
   })
 
   it('sorting by newest changes photo order', () => {
@@ -9,18 +8,10 @@ describe('Single collection', () => {
       .eq(0)
       .invoke('attr', 'src')
       .then(($srcAtr) => {
+        cy.get('.css-1w37yv3-container').click()
+        cy.get('#react-select-2-option-0').click()
 
-        cy.get('.css-1w37yv3-container')
-          .click()
-        cy.get('#react-select-2-option-0')
-          .click()
-
-        expect(
-          cy.get('[data-cy=single-collection-photo]')
-            .eq(0)
-            .invoke('attr', 'src')
-            .should('not.eq', $srcAtr)
-        )
+        expect(cy.get('[data-cy=single-collection-photo]').eq(0).invoke('attr', 'src').should('not.eq', $srcAtr))
       })
   })
 
@@ -29,19 +20,10 @@ describe('Single collection', () => {
       .eq(0)
       .invoke('attr', 'src')
       .then(($srcAtr) => {
+        cy.get('.css-1w37yv3-container').click()
+        cy.get('#react-select-2-option-1').click()
 
-        cy.get('.css-1w37yv3-container')
-          .click()
-        cy.get('#react-select-2-option-1')
-          .click()
-
-        expect(
-          cy.get('[data-cy=single-collection-photo]')
-            .eq(0)
-            .invoke('attr', 'src')
-            .should('not.eq', $srcAtr)
-        )
+        expect(cy.get('[data-cy=single-collection-photo]').eq(0).invoke('attr', 'src').should('not.eq', $srcAtr))
       })
   })
-
 })
