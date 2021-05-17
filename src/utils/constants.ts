@@ -1,6 +1,5 @@
 import { ICollectionParams, ISortOption } from './model'
 
-import { API_KEY } from '../api-keys'
 import { createApi } from 'unsplash-js'
 
 export const COLLECTION_PARAMS: ICollectionParams[] = [
@@ -16,5 +15,4 @@ export const SORT_OPTIONS: ISortOption[] = [
   { value: 'date', label: 'newest' },
   { value: 'likes', label: 'most popular' },
 ]
-
-export const UNSPLASH = createApi({ accessKey: API_KEY })
+export const UNSPLASH = createApi({ accessKey: process.env.API_KEY as string })
