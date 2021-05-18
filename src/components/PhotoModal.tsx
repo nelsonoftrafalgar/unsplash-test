@@ -9,6 +9,7 @@ const {
   lightFontColor,
   fontColor,
   breakpointSmall,
+  breakpointMedium,
   breakpointLarge,
   fontSize1,
   fontSize2,
@@ -32,7 +33,8 @@ const Wrapper = styled.div`
 const PhotoContainer = styled.div`
   position: relative;
   width: 80%;
-  height: 90vh;
+  max-height: 90vh;
+  height: 100%;
   background: ${itemsBgColor};
   border-radius: ${borderRadius};
   display: flex;
@@ -64,10 +66,18 @@ const CloseButton = styled.button`
   background: transparent;
   color: ${fontColor};
   position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: ${fontSize3};
+  top: 0;
+  right: 2%;
+  font-size: ${fontSize2};
   cursor: pointer;
+  ${breakpoint(
+    breakpointMedium,
+    `
+    top: 10px;
+    right: 15px;
+    font-size: ${fontSize3};
+  `
+  )}
 `
 
 const Loading = styled.span`
@@ -92,7 +102,7 @@ const Stats = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  padding: 0 10px;
+  padding: 10px 10px 0 10px;
   flex-direction: column;
   ${breakpoint(
     breakpointSmall,
